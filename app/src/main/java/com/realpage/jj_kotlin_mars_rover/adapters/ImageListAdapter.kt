@@ -1,19 +1,22 @@
 package com.realpage.jj_kotlin_mars_rover.adapters
 
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import com.realpage.jj_kotlin_mars_rover.R
+import com.realpage.jj_kotlin_mars_rover.SelectedImageFragment
 import com.realpage.jj_kotlin_mars_rover.data.Photo
 import com.squareup.picasso.Picasso
 
-class imageListAdapter(imageList: List<Photo>, width: Int ) : RecyclerView.Adapter<imageListAdapter.ImageViewHolder>(){
+class ImageListAdapter(imageList: List<Photo>, context: Context?, width: Int ) : RecyclerView.Adapter<ImageListAdapter.ImageViewHolder>(){
 
     private var images = imageList
     private val width = width
+    private val context = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -23,12 +26,23 @@ class imageListAdapter(imageList: List<Photo>, width: Int ) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(view:ImageViewHolder, position: Int) {
-        var image = images.get(position)
+        var image = images[position]
 
         Picasso.get().load(image.img_src).resize( width, width).centerInside().placeholder(R.mipmap.ic_launcher_round).into(view.imageViewIcon)
+        view.imageViewIcon.setOnClickListener{v ->
+            val selectedImageFragment = SelectedImageFragment(image)
+
+            val fragActivity = context as FragmentActivity
+            val fragmentTransaction = fragActivity.supportFragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.fragment_container,selectedImageFragment)
+            fragmentTransaction.addToBackStack("SelectedImageFragment")
+            fragmentTransaction.commit()
+        }
     }
 
     override fun getItemCount(): Int = images.size
+
+
 
 
     class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

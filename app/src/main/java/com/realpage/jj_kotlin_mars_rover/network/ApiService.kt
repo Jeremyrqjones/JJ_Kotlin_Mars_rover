@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("curiosity/photos?sol=1000")
+    @GET("curiosity/photos?sol=1000&page=2")
     fun getCuriosity(): Deferred<Response<RoverPhotoResponse>>
 
 
@@ -24,3 +24,5 @@ interface ApiService {
 //    https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=DEMO_KEY
 //
 //    https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=2&api_key=DEMO_KEY
+//    https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=2&api_key=DEMO_KEY
+
