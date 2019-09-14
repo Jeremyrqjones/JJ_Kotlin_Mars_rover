@@ -29,6 +29,25 @@ class CuriosityViewModel : ViewModel(){
         }
     }
 
+    fun fetchImagesByRover(rover: String, sol: Int){
+            scope.launch { withContext(Dispatchers.Unconfined) {
+                val roverPhotos = repository.getImagesByRover(rover, sol)
+                curiosityPhotosLiveData.postValue(null)
+                curiosityPhotosLiveData.postValue(roverPhotos)
+            }
+        }
+    }
+
+    fun fetchImagesBySpirit(){
+        scope.launch {
+            val roverPhotos = repository.getImagesBySpirit()
+            if(!roverPhotos.isNullOrEmpty()) {
+                curiosityPhotosLiveData.postValue(null)
+                curiosityPhotosLiveData.postValue(roverPhotos)
+            }
+        }
+    }
+
 
     fun cancelAllRequests() = coroutineContext.cancel()
 }

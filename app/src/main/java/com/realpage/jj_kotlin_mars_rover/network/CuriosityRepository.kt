@@ -11,6 +11,25 @@ class CuriosityRepository(private val api : ApiService) : BaseRepository() {
         )
 
         return photoResponse?.results
+    }
 
+    suspend fun getImagesByRover(rover:String, sol:Int) : List<Photo>?{
+
+        val photoResponse = safeApiCall(
+            call = {api.getImagesByRover(rover, sol).await()},
+            errorMessage = "Error Fetching images"
+        )
+
+        return photoResponse?.results
+    }
+
+    suspend fun getImagesBySpirit() : List<Photo>?{
+
+        val photoResponse = safeApiCall(
+            call = {api.getImagesBySpirit().await()},
+            errorMessage = "Error Fetching images"
+        )
+
+        return photoResponse?.results
     }
 }

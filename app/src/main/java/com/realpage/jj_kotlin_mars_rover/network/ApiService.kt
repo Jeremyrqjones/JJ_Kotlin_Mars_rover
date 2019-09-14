@@ -4,15 +4,20 @@ import com.realpage.jj_kotlin_mars_rover.data.RoverPhotoResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("curiosity/photos?sol=1000&page=2")
+    @GET("curiosity/photos?sol=1000&page=1")
     fun getCuriosity(): Deferred<Response<RoverPhotoResponse>>
 
 
-//    @GET("movie/{id}")
-//    fun getMovieById(@Path("id") id:Int): Deferred<Response<Movie>>
+    @GET("{rover}/photos?")
+    fun getImagesByRover(@Path("rover") rover:String, @Query("sol") sol:Int): Deferred<Response<RoverPhotoResponse>>
+
+    @GET("spirit/photos?earth_date=2015-6-3&camera=fhaz")
+    fun getImagesBySpirit(): Deferred<Response<RoverPhotoResponse>>
 
 }
 
@@ -25,4 +30,4 @@ interface ApiService {
 //
 //    https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=2&api_key=DEMO_KEY
 //    https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=2&api_key=DEMO_KEY
-
+//    https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=DEMO_KEY
